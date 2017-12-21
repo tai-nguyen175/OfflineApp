@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Offline App</string>
+    <string name="comments_add_comment_hint">comment</string>
+    <string name="comments_add_comment_button_text">add</string>
+</resources>
