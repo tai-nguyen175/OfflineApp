@@ -1,10 +1,10 @@
 package com.example.offline.app.di;
 
-import com.example.offline.domain.GetCommentsUseCase;
-import com.example.offline.domain.repository.LocalCommentRepository;
-import com.example.offline.domain.repository.RemoteCommentRepository;
-import com.example.offline.domain.AddCommentUseCase;
-import com.example.offline.domain.SyncCommentUseCase;
+import com.example.domain.interactor.GetCommentsUseCase;
+import com.example.domain.repository.LocalCommentRepository;
+import com.example.domain.repository.RemoteCommentRepository;
+import com.example.domain.interactor.AddCommentUseCase;
+import com.example.domain.interactor.SyncCommentUseCase;
 import com.example.offline.app.views.CommentsViewModelFactory;
 
 import dagger.Module;

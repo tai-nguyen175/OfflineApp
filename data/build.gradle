@@ -1,6 +1,4 @@
-apply plugin: 'com.android.application'
-apply from: "$project.rootDir/config/quality.gradle"
-
+apply plugin: 'com.android.library'
 project.ext {
     supportLibraryVersion = "26.1.0"
     androidArchVersion = "1.0.0-rc1"
@@ -16,41 +14,41 @@ project.ext {
     rxRelayVersion = "2.0.0"
     rxLintVersion = "1.6"
 }
-
 android {
     compileSdkVersion 26
+
+
+
     defaultConfig {
-        applicationId "com.example.offline"
         minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        compileOptions {
-            sourceCompatibility JavaVersion.VERSION_1_8
-            targetCompatibility JavaVersion.VERSION_1_8
-        }
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    buildTypes.each {
-        it.buildConfigField 'String', 'API_BASE_URL', "\"http://jsonplaceholder.typicode.com\""
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
-    lintOptions {
-        abortOnError false
-    }
+
 }
 
 dependencies {
     implementation project(':domain')
-    implementation project(':data')
-    implementation "com.android.support:appcompat-v7:$project.supportLibraryVersion"
 
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     // Dagger core
     annotationProcessor "com.google.dagger:dagger-compiler:$project.daggerVersion"
     implementation "com.google.dagger:dagger:$project.daggerVersion"

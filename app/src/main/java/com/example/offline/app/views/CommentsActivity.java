@@ -1,10 +1,10 @@
 package com.example.offline.app.views;
 
-import android.arch.lifecycle.LifecycleRegistry;
-import android.arch.lifecycle.LifecycleRegistryOwner;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,8 +12,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.example.offline.R;
+import com.example.domain.model.Comment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -22,7 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.AndroidInjection;
 
-public class CommentsActivity extends AppCompatActivity implements LifecycleRegistryOwner {
+public class CommentsActivity extends AppCompatActivity {
 
     @Inject
     CommentsViewModelFactory viewModelFactory;
@@ -37,13 +39,6 @@ public class CommentsActivity extends AppCompatActivity implements LifecycleRegi
 
     private CommentsViewModel viewModel;
 
-    private LifecycleRegistry registry = new LifecycleRegistry(this);
-
-    @Override
-    public LifecycleRegistry getLifecycle() {
-        return registry;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
@@ -51,12 +46,12 @@ public class CommentsActivity extends AppCompatActivity implements LifecycleRegi
         setContentView(R.layout.comments_activity);
 
         ButterKnife.bind(this);
-
         initRecyclerView();
-
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(CommentsViewModel.class);
 
-        viewModel.comments().observe(this, recyclerViewAdapter::updateCommentList);
+
+        final Observer<List<Comment>> nameObserver = comments -> recyclerViewAdapter.updateCommentList(comments);
+        viewModel.getComments().observe(this, recyclerViewAdapter::updateCommentList);
     }
 
     @OnClick(R.id.add_comment_button)

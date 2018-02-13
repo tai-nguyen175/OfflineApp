@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.offline.R;
-import com.example.offline.domain.model.Comment;
+import com.example.domain.model.Comment;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
         } else {
             holder.commentText.setTextColor(Color.BLACK);
         }
-        holder.commentText.setText(comment.getCommentText());
+        holder.commentText.setText(comment.getBody());
     }
 
     @Override
@@ -45,7 +45,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
     }
 
     public void updateCommentList(List<Comment> newComments) {
-        Timber.d("Got new comments " + newComments.size());
+        Timber.d("Got new getComments " + newComments.size());
         this.comments.clear();
         this.comments.addAll(newComments);
         notifyDataSetChanged();

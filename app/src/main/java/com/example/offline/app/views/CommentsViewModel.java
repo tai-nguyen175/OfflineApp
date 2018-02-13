@@ -4,9 +4,9 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.example.offline.domain.AddCommentUseCase;
-import com.example.offline.domain.GetCommentsUseCase;
-import com.example.offline.domain.model.Comment;
+import com.example.domain.interactor.AddCommentUseCase;
+import com.example.domain.interactor.GetCommentsUseCase;
+import com.example.domain.model.Comment;
 
 import java.util.List;
 
@@ -25,7 +25,6 @@ public class CommentsViewModel extends ViewModel {
     public CommentsViewModel(GetCommentsUseCase getCommentsUseCase, AddCommentUseCase addCommentUseCase) {
         this.getCommentsUseCase = getCommentsUseCase;
         this.addCommentUseCase = addCommentUseCase;
-
         loadComments();
     }
 
@@ -45,9 +44,9 @@ public class CommentsViewModel extends ViewModel {
     }
 
     /**
-     * Exposes the latest comments so the UI can observe it
+     * Exposes the latest getComments so the UI can observe it
      */
-    public LiveData<List<Comment>> comments() {
+    public LiveData<List<Comment>> getComments() {
         return commentsLiveData;
     }
 
@@ -55,7 +54,8 @@ public class CommentsViewModel extends ViewModel {
         disposables.add(getCommentsUseCase.getComments()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+
                 .subscribe(commentsLiveData::setValue,
-                        t -> Timber.e(t, "get comments error")));
+                        t -> Timber.e(t, "get getComments error")));
     }
 }

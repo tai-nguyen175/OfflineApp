@@ -3,8 +3,8 @@ package com.example.offline.app.views;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
-import com.example.offline.domain.AddCommentUseCase;
-import com.example.offline.domain.GetCommentsUseCase;
+import com.example.domain.interactor.AddCommentUseCase;
+import com.example.domain.interactor.GetCommentsUseCase;
 
 public class CommentsViewModelFactory implements ViewModelProvider.Factory {
 

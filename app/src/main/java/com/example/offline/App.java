@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 
 import com.example.offline.app.di.DaggerAppComponent;
-import com.example.offline.domain.services.jobs.SyncCommentJobManagerInitializer;
+import com.example.services.jobqueue.SyncCommentJobManagerInitializer;
 
 import javax.inject.Inject;
 

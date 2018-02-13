@@ -2,19 +2,20 @@ package com.example.offline.app.di;
 
 import android.content.Context;
 
+import com.example.data.AppDao;
+import com.example.data.AppDatabase;
+import com.example.data.LocalCommentRepositoryImp;
+import com.example.data.RemoteCommentRepositoryImp;
+import com.example.domain.interactor.DeleteCommentUseCase;
+import com.example.domain.interactor.UpdateCommentUseCase;
+import com.example.domain.repository.LocalCommentRepository;
+import com.example.domain.repository.RemoteCommentRepository;
+import com.example.mapper.CommentMapper;
 import com.example.offline.App;
-import com.example.offline.data.AppDatabase;
-import com.example.offline.data.AppDao;
-import com.example.offline.data.LocalCommentRepositoryImp;
-import com.example.offline.data.RemoteCommentRepositoryImp;
-import com.example.offline.domain.DeleteCommentUseCase;
-import com.example.offline.domain.repository.LocalCommentRepository;
-import com.example.offline.domain.repository.RemoteCommentRepository;
-import com.example.offline.domain.UpdateCommentUseCase;
-import com.example.offline.domain.services.jobs.SyncCommentResponseObserver;
-import com.example.offline.domain.services.jobs.GcmJobService;
-import com.example.offline.domain.services.jobs.SchedulerJobService;
-import com.example.offline.domain.services.jobs.SyncCommentJobManagerInitializer;
+import com.example.services.jobqueue.GcmJobService;
+import com.example.services.jobqueue.SchedulerJobService;
+import com.example.services.jobqueue.SyncCommentJobManagerInitializer;
+import com.example.services.jobqueue.SyncCommentResponseObserver;
 
 import javax.inject.Singleton;
 
@@ -52,8 +53,8 @@ public class AppModule {
 
     @Singleton
     @Provides
-    LocalCommentRepository provideLocalCommentRepository(AppDao appDao) {
-        return new LocalCommentRepositoryImp(appDao);
+    LocalCommentRepository provideLocalCommentRepository(AppDao appDao, CommentMapper commentMapper) {
+        return new LocalCommentRepositoryImp(appDao, commentMapper);
     }
 
     @Singleton
@@ -84,5 +85,11 @@ public class AppModule {
     @Provides
     SyncCommentJobManagerInitializer provideSyncCommentJobManagerInitializer(SyncCommentResponseObserver syncCommentResponseObserver) {
         return new SyncCommentJobManagerInitializer(syncCommentResponseObserver);
+    }
+
+    @Singleton
+    @Provides
+    CommentMapper provideCommentMapper() {
+        return new CommentMapper();
     }
 }
